@@ -1,13 +1,13 @@
 {
   "dependencies": {
     "com.heroiclabs.nakama-unity": {
-      "version": "https://github.com/heroiclabs/nakama-unity.git?path=/Packages/Nakama#v2.8.0",
+      "version": "https://github.com/heroiclabs/nakama-unity.git?path=/Packages/Nakama#luke/socket-main-thread",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.modules.unitywebrequest": "1.0.0"
       },
-      "hash": "c453e605231bb4835b144a67ed93f188eabfe2f5"
+      "hash": "efc3d92182f1c00f26cc5a3493fc2406abd01931"
     },
     "com.unity.2d.animation": {
       "version": "3.2.5",

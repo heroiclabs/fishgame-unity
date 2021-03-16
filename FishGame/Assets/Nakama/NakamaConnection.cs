@@ -92,7 +92,7 @@ public class NakamaConnection : ScriptableObject
         }
 
         // Open a new Socket for realtime communication.
-        Socket = Client.NewSocket();
+        Socket = Client.NewSocket(true);
         await Socket.ConnectAsync(Session, true);
     }
 

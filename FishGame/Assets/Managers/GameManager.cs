@@ -54,11 +54,6 @@ public class GameManager : MonoBehaviour
         // Create an empty dictionary to hold references to the currently connected players.
         players = new Dictionary<string, GameObject>();
 
-        // Get a reference to the UnityMainThreadDispatcher.
-        // We use this to queue event handler callbacks on the main thread.
-        // If we did not do this, we would not be able to instantiate objects or manipulate things like UI.
-        var mainThread = UnityMainThreadDispatcher.Instance();
-
         // Connect to the Nakama server.
         await NakamaConnection.Connect();
 
@@ -66,9 +61,9 @@ public class GameManager : MonoBehaviour
         MainMenu.GetComponent<MainMenu>().EnableFindMatchButton();
 
         // Setup network event handlers.
-        NakamaConnection.Socket.ReceivedMatchmakerMatched += m => mainThread.Enqueue(() => OnReceivedMatchmakerMatched(m));
-        NakamaConnection.Socket.ReceivedMatchPresence += m => mainThread.Enqueue(() => OnReceivedMatchPresence(m));
-        NakamaConnection.Socket.ReceivedMatchState += m => mainThread.Enqueue(async () => await OnReceivedMatchState(m));
+        NakamaConnection.Socket.ReceivedMatchmakerMatched += OnReceivedMatchmakerMatched;
+        NakamaConnection.Socket.ReceivedMatchPresence += OnReceivedMatchPresence;
+        NakamaConnection.Socket.ReceivedMatchState += async m => await OnReceivedMatchState(m);
 
         // Setup in-game menu event handler.
         InGameMenu.GetComponent<InGameMenu>().OnRequestQuitMatch.AddListener(async () => await QuitMatch());

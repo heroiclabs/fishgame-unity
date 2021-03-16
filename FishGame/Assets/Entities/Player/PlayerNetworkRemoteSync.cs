@@ -55,7 +55,7 @@ public class PlayerNetworkRemoteSync : MonoBehaviour
         playerTransform = playerRigidbody.GetComponent<Transform>();
 
         // Add an event listener to handle incoming match state data.
-        gameManager.NakamaConnection.Socket.ReceivedMatchState += EnqueueOnReceivedMatchState;
+        gameManager.NakamaConnection.Socket.ReceivedMatchState += OnReceivedMatchState;
     }
 
     /// <summary>
@@ -88,18 +88,8 @@ public class PlayerNetworkRemoteSync : MonoBehaviour
     {
         if (gameManager != null)
         {
-            gameManager.NakamaConnection.Socket.ReceivedMatchState -= EnqueueOnReceivedMatchState;
+            gameManager.NakamaConnection.Socket.ReceivedMatchState -= OnReceivedMatchState;
         }
-    }
-
-    /// <summary>
-    /// Passes execution of the event handler to the main unity thread so that we can interact with GameObjects.
-    /// </summary>
-    /// <param name="matchState">The incoming match state data.</param>
-    private void EnqueueOnReceivedMatchState(IMatchState matchState)
-    {
-        var mainThread = UnityMainThreadDispatcher.Instance();
-        mainThread.Enqueue(() => OnReceivedMatchState(matchState));
     }
 
     /// <summary>
